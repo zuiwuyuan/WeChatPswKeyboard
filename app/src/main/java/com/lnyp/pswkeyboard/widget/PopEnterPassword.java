@@ -20,8 +20,6 @@ import com.lnyp.pswkeyboard.R;
  */
 public class PopEnterPassword extends PopupWindow {
 
-    public static final int SHOW_TIME_MIN1 = 800;
-
     private PasswordView pwdView;
 
     private View mMenuView;
@@ -34,8 +32,8 @@ public class PopEnterPassword extends PopupWindow {
 
         this.mContext = context;
 
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         mMenuView = inflater.inflate(R.layout.pop_enter_password, null);
 
         pwdView = (PasswordView) mMenuView.findViewById(R.id.pwd_view);
@@ -52,13 +50,15 @@ public class PopEnterPassword extends PopupWindow {
             }
         });
 
-        pwdView.getCancelImageView().setOnClickListener(new View.OnClickListener() {
+        pwdView.getImgCancel().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dismiss();
             }
         });
-        pwdView.getLayoutBack().setOnClickListener(new View.OnClickListener() {
+
+        pwdView.getVirtualKeyboardView().getLayoutBack().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
