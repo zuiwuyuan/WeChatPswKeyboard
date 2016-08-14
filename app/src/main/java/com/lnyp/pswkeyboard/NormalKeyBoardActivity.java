@@ -25,17 +25,32 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
 
     private EditText textAmount;
 
+    private Animation enterAnim;
+
+    private Animation exitAnim;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal_key_board);
 
-        virtualKeyboardView = (VirtualKeyboardView) findViewById(R.id.virtualKeyboardView);
-
-        textAmount = (EditText) findViewById(R.id.textAmount);
-
         valueList = virtualKeyboardView.getValueList();
 
+        initAnim();
+
+        initView();
+    }
+
+    private void initAnim() {
+
+        enterAnim = AnimationUtils.loadAnimation(this, R.anim.push_bottom_in);
+        exitAnim = AnimationUtils.loadAnimation(this, R.anim.push_bottom_out);
+    }
+
+    private void initView() {
+
+        virtualKeyboardView = (VirtualKeyboardView) findViewById(R.id.virtualKeyboardView);
+        textAmount = (EditText) findViewById(R.id.textAmount);
         virtualKeyboardView.getLayoutBack().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,25 +61,6 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
 
         gridView = virtualKeyboardView.getGridView();
         gridView.setOnItemClickListener(onItemClickListener);
-
-
-        initAnim();
-
-        initView();
-    }
-
-
-    Animation enterAnim;
-
-    Animation exitAnim;
-
-    private void initAnim() {
-
-        enterAnim = AnimationUtils.loadAnimation(this, R.anim.push_bottom_in);
-        exitAnim = AnimationUtils.loadAnimation(this, R.anim.push_bottom_out);
-    }
-
-    private void initView() {
 
         textAmount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +75,6 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
         });
 
     }
-
 
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -120,6 +115,4 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
             }
         }
     };
-
-
 }

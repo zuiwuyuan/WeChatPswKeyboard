@@ -66,6 +66,7 @@ public class PasswordView extends RelativeLayout {
         valueList = new ArrayList<>();
 
         tvList = new TextView[6];
+
         imgList = new ImageView[6];
 
         tvList[0] = (TextView) view.findViewById(R.id.tv_pass1);

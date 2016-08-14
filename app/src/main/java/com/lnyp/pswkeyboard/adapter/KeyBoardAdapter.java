@@ -83,6 +83,4 @@ public class KeyBoardAdapter extends BaseAdapter {
         public TextView btnKey;
         public RelativeLayout imgDelete;
     }
-
-
 }

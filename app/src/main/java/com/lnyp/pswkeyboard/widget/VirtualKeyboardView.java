@@ -34,6 +34,7 @@ public class VirtualKeyboardView extends RelativeLayout implements View.OnClickL
 
     public VirtualKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         this.context = context;
         View view = View.inflate(context, R.layout.layout_virtual_keyboard, null);
 
@@ -57,20 +58,8 @@ public class VirtualKeyboardView extends RelativeLayout implements View.OnClickL
         return valueList;
     }
 
-    public void setValueList(ArrayList<Map<String, String>> valueList) {
-        this.valueList = valueList;
-    }
-
-    public void setLayoutBack(RelativeLayout layoutBack) {
-        this.layoutBack = layoutBack;
-    }
-
     public GridView getGridView() {
         return gridView;
-    }
-
-    public void setGridView(GridView gridView) {
-        this.gridView = gridView;
     }
 
     private void setView() {
@@ -98,6 +87,4 @@ public class VirtualKeyboardView extends RelativeLayout implements View.OnClickL
     public void onClick(View v) {
 
     }
-
-
 }
