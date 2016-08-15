@@ -3,7 +3,9 @@ package com.lnyp.pswkeyboard;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -12,6 +14,7 @@ import android.widget.GridView;
 
 import com.lnyp.pswkeyboard.widget.VirtualKeyboardView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -41,6 +44,9 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
         valueList = virtualKeyboardView.getValueList();
     }
 
+    /**
+     * 数字键盘显示动画
+     */
     private void initAnim() {
 
         enterAnim = AnimationUtils.loadAnimation(this, R.anim.push_bottom_in);
@@ -49,8 +55,27 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
 
     private void initView() {
 
-        virtualKeyboardView = (VirtualKeyboardView) findViewById(R.id.virtualKeyboardView);
         textAmount = (EditText) findViewById(R.id.textAmount);
+
+        // 设置不调用系统键盘
+        if (android.os.Build.VERSION.SDK_INT <= 10) {
+            textAmount.setInputType(InputType.TYPE_NULL);
+        } else {
+            this.getWindow().setSoftInputMode(
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            try {
+                Class<EditText> cls = EditText.class;
+                Method setShowSoftInputOnFocus;
+                setShowSoftInputOnFocus = cls.getMethod("setShowSoftInputOnFocus",
+                        boolean.class);
+                setShowSoftInputOnFocus.setAccessible(true);
+                setShowSoftInputOnFocus.invoke(textAmount, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        virtualKeyboardView = (VirtualKeyboardView) findViewById(R.id.virtualKeyboardView);
         virtualKeyboardView.getLayoutBack().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +102,7 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
     }
 
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 

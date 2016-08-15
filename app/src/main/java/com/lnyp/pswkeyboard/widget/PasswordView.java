@@ -40,8 +40,6 @@ public class PasswordView extends RelativeLayout {
 
     private int currentIndex = -1;    //用于记录当前输入密码格位置
 
-    private String strPassword;
-
     public PasswordView(Context context) {
         this(context, null);
     }
@@ -56,14 +54,17 @@ public class PasswordView extends RelativeLayout {
         imgCancel = (ImageView) view.findViewById(R.id.img_cancel);
         gridView = virtualKeyboardView.getGridView();
 
-        setView(view);
+        initValueList();
+
+        initView(view);
+
+        setupView();
 
         addView(view);
     }
 
-    private void setView(View view) {
+    private void initView(View view) {
 
-        valueList = new ArrayList<>();
 
         tvList = new TextView[6];
 
@@ -84,7 +85,14 @@ public class PasswordView extends RelativeLayout {
         imgList[4] = (ImageView) view.findViewById(R.id.img_pass5);
         imgList[5] = (ImageView) view.findViewById(R.id.img_pass6);
 
-        /* 初始化按钮上应该显示的数字 */
+    }
+
+    // 这里，我们没有使用默认的数字键盘，因为第10个数字不显示.而是空白
+    private void initValueList() {
+
+        valueList = new ArrayList<>();
+
+        // 初始化按钮上应该显示的数字
         for (int i = 1; i < 13; i++) {
             Map<String, String> map = new HashMap<String, String>();
             if (i < 10) {
@@ -98,7 +106,11 @@ public class PasswordView extends RelativeLayout {
             }
             valueList.add(map);
         }
+    }
 
+    private void setupView() {
+
+        // 这里、重新为数字键盘gridView设置了Adapter
         KeyBoardAdapter keyBoardAdapter = new KeyBoardAdapter(mContext, valueList);
         gridView.setAdapter(keyBoardAdapter);
 
@@ -148,13 +160,16 @@ public class PasswordView extends RelativeLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().length() == 1) {
-                    strPassword = "";     //每次触发都要先将strPassword置空，再重新获取，避免由于输入删除再输入造成混乱
+
+                    String strPassword = "";     //每次触发都要先将strPassword置空，再重新获取，避免由于输入删除再输入造成混乱
 
                     for (int i = 0; i < 6; i++) {
                         strPassword += tvList[i].getText().toString().trim();
                     }
-                    pass.inputFinish();    //接口中要实现的方法，完成密码输入完成后的响应逻辑
+                    System.out.println("strPassword :" + strPassword);
+                    pass.inputFinish(strPassword);    //接口中要实现的方法，完成密码输入完成后的响应逻辑
                 }
             }
         });

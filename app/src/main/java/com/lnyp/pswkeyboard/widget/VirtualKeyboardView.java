@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * 虚拟键盘
  */
-public class VirtualKeyboardView extends RelativeLayout implements View.OnClickListener {
+public class VirtualKeyboardView extends RelativeLayout {
 
     Context context;
 
@@ -36,16 +36,18 @@ public class VirtualKeyboardView extends RelativeLayout implements View.OnClickL
         super(context, attrs);
 
         this.context = context;
+
         View view = View.inflate(context, R.layout.layout_virtual_keyboard, null);
 
         valueList = new ArrayList<>();
 
         layoutBack = (RelativeLayout) view.findViewById(R.id.layoutBack);
-        layoutBack.setOnClickListener(this);
 
         gridView = (GridView) view.findViewById(R.id.gv_keybord);
 
-        setView();
+        initValueList();
+
+        setupView();
 
         addView(view);      //必须要，不然不显示控件
     }
@@ -58,15 +60,11 @@ public class VirtualKeyboardView extends RelativeLayout implements View.OnClickL
         return valueList;
     }
 
-    public GridView getGridView() {
-        return gridView;
-    }
+    private void initValueList() {
 
-    private void setView() {
-
-        /* 初始化按钮上应该显示的数字 */
+        // 初始化按钮上应该显示的数字
         for (int i = 1; i < 13; i++) {
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map = new HashMap<>();
             if (i < 10) {
                 map.put("name", String.valueOf(i));
             } else if (i == 10) {
@@ -78,13 +76,15 @@ public class VirtualKeyboardView extends RelativeLayout implements View.OnClickL
             }
             valueList.add(map);
         }
+    }
+
+    public GridView getGridView() {
+        return gridView;
+    }
+
+    private void setupView() {
 
         KeyBoardAdapter keyBoardAdapter = new KeyBoardAdapter(context, valueList);
         gridView.setAdapter(keyBoardAdapter);
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

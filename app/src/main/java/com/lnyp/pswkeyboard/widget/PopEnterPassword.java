@@ -32,32 +32,32 @@ public class PopEnterPassword extends PopupWindow {
 
         this.mContext = context;
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mMenuView = inflater.inflate(R.layout.pop_enter_password, null);
 
         pwdView = (PasswordView) mMenuView.findViewById(R.id.pwd_view);
 
-
         //添加密码输入完成的响应
         pwdView.setOnFinishInput(new OnPasswordInputFinish() {
             @Override
-            public void inputFinish() {
+            public void inputFinish(String password) {
 
                 dismiss();
 
-                Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "支付成功，密码为：" + password, Toast.LENGTH_SHORT).show();
             }
         });
 
+        // 监听X关闭按钮
         pwdView.getImgCancel().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dismiss();
             }
         });
 
+        // 监听键盘上方的返回
         pwdView.getVirtualKeyboardView().getLayoutBack().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
