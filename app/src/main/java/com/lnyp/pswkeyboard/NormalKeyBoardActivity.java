@@ -34,11 +34,11 @@ public class NormalKeyBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal_key_board);
 
-        valueList = virtualKeyboardView.getValueList();
-
         initAnim();
 
         initView();
+
+        valueList = virtualKeyboardView.getValueList();
     }
 
     private void initAnim() {
