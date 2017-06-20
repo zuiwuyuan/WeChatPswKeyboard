@@ -41,11 +41,34 @@ public class PopEnterPassword extends PopupWindow {
         //添加密码输入完成的响应
         pwdView.setOnFinishInput(new OnPasswordInputFinish() {
             @Override
-            public void inputFinish(String password) {
+            public void inputFinish(final String password) {
 
-                dismiss();
+                new Thread(new Runnable() {
 
-                Toast.makeText(mContext, "支付成功，密码为：" + password, Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void run() {
+                        // 模拟耗时的操作。
+                        try {
+
+                            Thread.sleep(500);
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        mContext.runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                dismiss();
+
+                                Toast.makeText(mContext, "支付成功，密码为：" + password, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                }).start();
             }
         });
 

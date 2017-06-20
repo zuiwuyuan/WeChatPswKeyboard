@@ -118,8 +118,9 @@ public class PasswordView extends RelativeLayout {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position < 11 && position != 9) {    //点击0~9按钮
-                    if (currentIndex >= -1 && currentIndex < 5) {      //判断输入位置————要小心数组越界
 
+                    if (currentIndex >= -1 && currentIndex < 5) {      //判断输入位置————要小心数组越界
+                        ;
                         ++currentIndex;
                         tvList[currentIndex].setText(valueList.get(position).get("name"));
 
@@ -168,7 +169,6 @@ public class PasswordView extends RelativeLayout {
                     for (int i = 0; i < 6; i++) {
                         strPassword += tvList[i].getText().toString().trim();
                     }
-                    System.out.println("strPassword :" + strPassword);
                     pass.inputFinish(strPassword);    //接口中要实现的方法，完成密码输入完成后的响应逻辑
                 }
             }
